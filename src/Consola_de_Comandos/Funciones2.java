@@ -4,11 +4,45 @@
  */
 package Consola_de_Comandos;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.Calendar;
 
 /**
  *
- * @author andre
+ * @author jerem
  */
 public class Funciones2 extends Funciones1{
+    
+    public String getDate() {
+        SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
+        
+        return fecha.format(Calendar.getInstance().getTime());
+    }
+    
+    public String getTime() {
+        LocalTime time = LocalTime.now();
+        return String.valueOf(time.getHour() + ":" + time.getMinute());
+    }
+    
+    public void escribirArchivo (File mf, String texto) throws IOException {
+        BufferedWriter write;
+        if (mf.exists()) {
+            if (!mf.isHidden() && mf.isFile()) {
+                write = new BufferedWriter(new FileWriter(mf, true));
+                write.write(texto);
+                write.newLine();
+                write.close();
+            } else {
+                throw new IOException("Error. El archivo es un directorio.");
+            }
+        } else {
+            throw new IOException("Error. El archivo no existe");
+        }
+    }
+
    }
