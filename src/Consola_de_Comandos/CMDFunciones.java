@@ -9,7 +9,4 @@ package Consola_de_Comandos;
  * @author najma
  */
 public class CMDFunciones {
-    public static void main(String[] args) {
-        new GUI().setVisible(true);
-    }
 }

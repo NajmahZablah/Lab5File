@@ -9,5 +9,5 @@ package Consola_de_Comandos;
  * @author najma
  */
 public class Main {
-    
+
 }
