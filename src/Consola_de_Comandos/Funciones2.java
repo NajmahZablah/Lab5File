@@ -30,44 +30,72 @@ public class Funciones2 extends Funciones1{
     public String getTime() {
         SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
         return time.format(new Date());
-}
+    }
 
-    
-    public void escribirArchivo (File mf, String texto) throws IOException {
-        BufferedWriter write;
-        if (mf.exists()) {
-            if (!mf.isHidden() && mf.isFile()) {
-                write = new BufferedWriter(new FileWriter(mf, true));
-                write.write(texto);
-                write.newLine();
-                write.close();
-            } else {
-                throw new IOException("Error. El archivo es un directorio.");
-            }
-        } else {
+    public void escribirArchivo(File mf, String texto) throws IOException {
+        if (!mf.exists()) {
             throw new IOException("Error. El archivo no existe");
         }
+        
+        if (mf.isDirectory()) {
+            throw new IOException("Error. El archivo es un directorio");
+        }
+        
+        if (mf.isHidden()) {
+            throw new IOException("Error. El archivo está oculto");
+        }
+        
+        if (!esArchivoTexto(mf)) {
+            throw new IOException("Solo se puede escribir en archivos de texto (.txt, .log, .csv, etc.)");
+        }
+        
+        BufferedWriter write = new BufferedWriter(new FileWriter(mf, true));
+        write.write(texto);
+        write.newLine();
+        write.close();
     }
     
-    public String leerArchivo(File mf) throws IOException {
-        BufferedReader leer;
-        String texto = "";
-        String linea;
+    
+    
+    private boolean esArchivoTexto(File archivo) {
+            String nombre = archivo.getName().toLowerCase();
 
-        if (mf.exists()) {
-            if (!mf.isHidden() && mf.isFile()) {
-                leer = new BufferedReader(new FileReader(mf));
-                while ((linea = leer.readLine()) != null) {
-                    texto += linea + "\n";
+            String[] extensionesPermitidas = {
+                ".txt", ".log", ".csv", ".xml", ".json", 
+                ".html", ".css", ".js", ".java", ".py",
+                ".c", ".cpp", ".h", ".md", ".ini", ".cfg"
+            };
+
+            for (String extension : extensionesPermitidas) {
+                if (nombre.endsWith(extension)) {
+                    return true;
                 }
-                leer.close();
-            } else {
-                throw new IOException("Error. El archivo es un directorio.");
             }
-        } else {
-            throw new IOException("Error. El archivo no existe.");
-        }
-        return texto;
+            return false;
     }
-
-   }
+    
+    public String leerArchivo(File archivo) throws IOException {
+        if (!archivo.exists()) {
+            throw new IOException("Error: El archivo no existe");
+        }
+        
+        if (archivo.isDirectory()) {
+            throw new IOException("Error: La ruta es un directorio, no un archivo");
+        }
+        
+        if (!esArchivoTexto(archivo)) {
+            throw new IOException("Solo se puede leer archivos de texto (.txt, .log, .csv, etc.)");
+        }
+        
+        StringBuilder contenido = new StringBuilder();
+        BufferedReader lector = new BufferedReader(new FileReader(archivo));
+        String linea;
+        
+        while ((linea = lector.readLine()) != null) {
+            contenido.append(linea).append("\n");
+        }
+        
+        lector.close();
+        return contenido.toString();
+    }
+}
