@@ -6,10 +6,8 @@ package Consola_de_Comandos;
 
 /**
  *
- * @author najma
+ * @author andre
  */
-public class Main {
- public static void main(String[] args) {
-       new GUI().setVisible(true);
-    }
+public class Funciones3 {
+    
 }

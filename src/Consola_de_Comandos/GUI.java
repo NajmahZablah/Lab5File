@@ -15,11 +15,11 @@ import java.io.IOException;
  *
  * @author najma
  */
-public class GUI {
+public class GUI extends JFrame {
     
     // atributos
     private JTextArea consola;
-    private Funciones gestor;
+    private Funciones1 gestor;
     private String prompt;
     private File directorioActual;
     
