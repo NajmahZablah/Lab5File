@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -25,9 +26,10 @@ public class Funciones2 extends Funciones1{
     }
     
     public String getTime() {
-        LocalTime time = LocalTime.now();
-        return String.valueOf(time.getHour() + ":" + time.getMinute());
-    }
+        SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
+        return time.format(new Date());
+}
+
     
     public void escribirArchivo (File mf, String texto) throws IOException {
         BufferedWriter write;
