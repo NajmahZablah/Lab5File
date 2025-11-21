@@ -72,7 +72,7 @@ public class Funciones1 {
         }
     }
 
-    public String listaDirectorio(File directorio) {
+    public String listarDirectorio(File directorio) {
         if (!directorio.exists()) {
             return "Error: El directorio no existe.";
 
