@@ -98,4 +98,13 @@ public class Funciones1 {
         return resultado.toString();
 
     }
+    
+    public File directorioAnterior(File directorioActual){
+    File padre  =directorioActual.getParentFile();
+    if(padre !=null){
+    return padre;
+    }
+    return directorioActual;
+    
+    }
 }
