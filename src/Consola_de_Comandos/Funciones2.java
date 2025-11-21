@@ -11,15 +11,4 @@ import java.io.File;
  * @author andre
  */
 public class Funciones2 extends Funciones1{
-   public File cambiarDirectorio(File directorioActual, String ruta) {
-        if (ruta == null || ruta.isEmpty()) {
-
-            return directorioActual;
-        }
-        File nuevoDir = new File(ruta);
-        
-        if(!nuevoDir.isAbsolute() ){
-        }
-
-    }   
-}
+   }

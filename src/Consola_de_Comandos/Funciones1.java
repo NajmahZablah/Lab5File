@@ -51,4 +51,25 @@ public class Funciones1 {
         }
         return arch.delete();
     }
+    
+    public File cambiarDirectorio(File directorioActual, String ruta) {
+      
+   if (ruta == null || ruta.isEmpty()) {
+            return directorioActual;
+        }
+
+        File nuevoDir = new File(ruta);
+        
+        if (!nuevoDir.isAbsolute()) {
+            nuevoDir = new File(directorioActual, ruta);
+        }
+
+        if (nuevoDir.exists() && nuevoDir.isDirectory()) {
+            return nuevoDir;
+        } else {
+            System.out.println("Error: La ruta no existe o no es un directorio");
+            return directorioActual;
+        }
+    }   
+
 }
