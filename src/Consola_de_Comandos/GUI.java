@@ -4,10 +4,12 @@
  */
 package Consola_de_Comandos;
 
+import javax.swing.*;
+
 /**
  *
  * @author najma
  */
-public class GUI {
+public class GUI extends JFrame {
     
 }

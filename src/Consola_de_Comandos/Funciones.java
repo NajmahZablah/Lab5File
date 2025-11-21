@@ -14,32 +14,32 @@ import java.util.Date;
  * @author najma
  */
 public class Funciones {
-    
+
     // atributos
     private File archivo = null;
-    
+
     public void setFile(String dirrecion) {
         archivo = new File(dirrecion);
     }
-    
+
     public File getFile() {
         return archivo;
     }
-    
+
     public boolean esDirectorio() {
         return archivo != null && archivo.isDirectory();
     }
-    
+
     public boolean crearCarpeta(File directorio, String nombreCarpeta) throws IOException {
         File nuevaCarpeta = new File(directorio, nombreCarpeta);
         return nuevaCarpeta.mkdir();
-    } 
-    
+    }
+
     public boolean crearArchivo(File directorio, String nombreArchivo) throws IOException {
         File nuevoArchivo = new File(directorio, nombreArchivo);
         return nuevoArchivo.createNewFile();
     }
-    
+
     public boolean eliminar(File arch) throws IOException {
         if (arch.isDirectory()) {
             File[] contenido = arch.listFiles();
@@ -51,4 +51,7 @@ public class Funciones {
         }
         return arch.delete();
     }
+
+  
+
 }
