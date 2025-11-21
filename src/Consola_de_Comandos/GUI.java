@@ -35,12 +35,13 @@ public class GUI extends JFrame {
         
         consola = new JTextArea();
         consola.setFont(new Font("Consolas", Font.PLAIN, 14));
-        consola.setForeground(Color.BLACK);
+        consola.setBackground(Color.BLACK);
         consola.setForeground(Color.WHITE);
         consola.setCaretColor(Color.WHITE);
         
         consola.addKeyListener(new KeyAdapter() {
-            public void KeyPressed(KeyEvent e) {
+            @Override
+            public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     e.consume();
                     
@@ -108,37 +109,37 @@ public class GUI extends JFrame {
             String argumento = partes.length > 1 ? partes[1] : "";
             
             switch (comando) {
-                case "Mkdir":
+                case "mkdir":
                     ejecutarMkdir(argumento);
                     break;
-                case "Mfile":
+                case "mfile":
                     ejecutarMfile(argumento);
                     break;
-                case "Rm":
+                case "rm":
                     ejecutarRm(argumento);
                     break;
-                case "Cd":
+                case "cd":
                     ejecutarCd(argumento);
                     break;
                 case "...":
                     ejecutarRegresarDir();
                     break;
-                case "Dir":
+                case "dir":
                     ejecutarDir();
                     break;
-                case "Date":
+                case "date":
                     ejecutarDate();
                     break;
-                case "Time":
+                case "time":
                     ejecutarTime();
                     break;
-                case "Wr":
+                case "wr":
                     ejecutarEscribir(argumento);
                     break;
-                case "Rd":
+                case "rd":
                     ejecutarLeer(argumento);
                     break;
-                case "Exit":
+                case "exit":
                     ejecutarExit();
                     break;
                 default:
