@@ -72,4 +72,30 @@ public class Funciones1 {
         }
     }   
 
+    public String listaDirectorio(File directorio){
+    if(!directorio.exists()){
+    return "Error: El directorio no existe.";
+    
+    }
+    
+    if(!directorio.isDirectory()){
+    return "Error:La ruta especificada no es un directorio";
+    }
+    
+    StringBuilder resultado = new StringBuilder();
+    
+    File[] contenido = directorio.listFiles();
+    if (contenido== null  || contenido.length ==0){
+    return "El directorio esta vacio";
+    }
+      
+    for(File elemento: contenido){
+    if(!elemento.isHidden()){
+    String tipo = elemento.isDirectory()?"<DIR>":"  ";
+    resultado.append("\n").append(tipo).append(" - ").append(elemento.getName());
+    }
+    }
+        return resultado.toString();
+
+    }
 }
