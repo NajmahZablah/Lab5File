@@ -4,8 +4,10 @@
  */
 package Consola_de_Comandos;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -45,6 +47,27 @@ public class Funciones2 extends Funciones1{
         } else {
             throw new IOException("Error. El archivo no existe");
         }
+    }
+    
+    public String leerArchivo(File mf) throws IOException {
+        BufferedReader leer;
+        String texto = "";
+        String linea;
+
+        if (mf.exists()) {
+            if (!mf.isHidden() && mf.isFile()) {
+                leer = new BufferedReader(new FileReader(mf));
+                while ((linea = leer.readLine()) != null) {
+                    texto += linea + "\n";
+                }
+                leer.close();
+            } else {
+                throw new IOException("Error. El archivo es un directorio.");
+            }
+        } else {
+            throw new IOException("Error. El archivo no existe.");
+        }
+        return texto;
     }
 
    }
