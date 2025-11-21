@@ -15,7 +15,7 @@ import java.util.Date;
  */
 public class Funciones {
     
-    // atributos
+    // atributo
     private File archivo = null;
     
     public void setFile(String dirrecion) {
