@@ -14,7 +14,7 @@ import java.util.Date;
  * @author najma
  */
 public class Funciones1 {
-    
+
     // atributo
     private File archivo = null;
 
@@ -51,15 +51,15 @@ public class Funciones1 {
         }
         return arch.delete();
     }
-    
+
     public File cambiarDirectorio(File directorioActual, String ruta) {
-      
-   if (ruta == null || ruta.isEmpty()) {
+
+        if (ruta == null || ruta.isEmpty()) {
             return directorioActual;
         }
 
         File nuevoDir = new File(ruta);
-        
+
         if (!nuevoDir.isAbsolute()) {
             nuevoDir = new File(directorioActual, ruta);
         }
@@ -70,41 +70,41 @@ public class Funciones1 {
             System.out.println("Error: La ruta no existe o no es un directorio");
             return directorioActual;
         }
-    }   
+    }
 
-    public String listaDirectorio(File directorio){
-    if(!directorio.exists()){
-    return "Error: El directorio no existe.";
-    
-    }
-    
-    if(!directorio.isDirectory()){
-    return "Error:La ruta especificada no es un directorio";
-    }
-    
-    StringBuilder resultado = new StringBuilder();
-    
-    File[] contenido = directorio.listFiles();
-    if (contenido== null  || contenido.length ==0){
-    return "El directorio esta vacio";
-    }
-      
-    for(File elemento: contenido){
-    if(!elemento.isHidden()){
-    String tipo = elemento.isDirectory()?"<DIR>":"  ";
-    resultado.append("\n").append(tipo).append(" - ").append(elemento.getName());
-    }
-    }
+    public String listaDirectorio(File directorio) {
+        if (!directorio.exists()) {
+            return "Error: El directorio no existe.";
+
+        }
+
+        if (!directorio.isDirectory()) {
+            return "Error:La ruta especificada no es un directorio";
+        }
+
+        StringBuilder resultado = new StringBuilder();
+
+        File[] contenido = directorio.listFiles();
+        if (contenido == null || contenido.length == 0) {
+            return "El directorio esta vacio";
+        }
+
+        for (File elemento : contenido) {
+            if (!elemento.isHidden()) {
+                String tipo = elemento.isDirectory() ? "<DIR>" : "  ";
+                resultado.append("\n").append(tipo).append(" - ").append(elemento.getName());
+            }
+        }
         return resultado.toString();
 
     }
-    
-    public File directorioAnterior(File directorioActual){
-    File padre  =directorioActual.getParentFile();
-    if(padre !=null){
-    return padre;
-    }
-    return directorioActual;
-    
+
+    public File directorioAnterior(File directorioActual) {
+        File padre = directorioActual.getParentFile();
+        if (padre != null) {
+            return padre;
+        }
+        return directorioActual;
+
     }
 }
