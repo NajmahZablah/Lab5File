@@ -101,45 +101,64 @@ public class GUI extends JFrame {
         return posicionCursor <= indicePrompt + prompt.length();
     }
     
+    private String extraerArgumento(String texto) {
+        int inicio = texto.indexOf('<');
+        int fin = texto.indexOf('>');
+        
+        if (inicio != -1 && fin != -1 && fin > inicio) {
+            return texto.substring(inicio + 1, fin).trim();
+        }
+        
+        String[] partes = texto.split("\\s+", 2);
+        if (partes.length > 1) {
+            return partes[1].replace("<", "").replace(">", "").trim();
+        }
+        
+        return "";
+    }
+    
+    private String extraerComando(String texto) {
+        return texto.trim().split("\\s+")[0];
+    }
+    
     private void procesarComando(String entrada) {
         try {
             
-            String[] partes = entrada.trim().split("\\s+", 2);
-            String comando = partes[0].toLowerCase();
-            String argumento = partes.length > 1 ? partes[1] : "";
+            String comando = extraerComando(entrada);
+            String argumento = extraerArgumento(entrada);
             
             switch (comando) {
-                case "mkdir":
+                case "Mkdir":
                     ejecutarMkdir(argumento);
                     break;
-                case "mfile":
+                case "Mfile":
                     ejecutarMfile(argumento);
                     break;
-                case "rm":
+                case "Rm":
                     ejecutarRm(argumento);
                     break;
-                case "cd":
+                case "Cd":
                     ejecutarCd(argumento);
                     break;
                 case "...":
                     ejecutarRegresarDir();
                     break;
-                case "dir":
+                case "Dir":
                     ejecutarDir();
                     break;
-                case "date":
+                case "Date":
                     ejecutarDate();
                     break;
-                case "time":
+                case "Time":
                     ejecutarTime();
                     break;
-                case "wr":
-                    ejecutarEscribir(argumento);
+                case "Escribir":
+                    ejecutarEscribir(entrada);
                     break;
-                case "rd":
+                case "Leer":
                     ejecutarLeer(argumento);
                     break;
-                case "exit":
+                case "Exit":
                     ejecutarExit();
                     break;
                 default:
@@ -235,16 +254,33 @@ public class GUI extends JFrame {
         consola.append("Hora actual: "+gestor2.getTime());
     }
     
-    private void ejecutarEscribir(String argumentos) throws IOException {
-        String[] partes = argumentos.split("\\s+", 2);
+    private void ejecutarEscribir(String entradaCompleta) throws IOException {
         
-        if (partes.length < 2) {
-            consola.append("Error: Formato incorrecto. Uso: wr <archivo> <texto>");
-            return;
+        String resto = entradaCompleta.substring(9).trim(); // "Escribir " tiene 9 caracteres
+        
+        int separador = resto.indexOf(':');
+        String nombreArchivo;
+        String texto;
+        
+        if (separador != -1) {
+            nombreArchivo = resto.substring(0, separador).trim();
+            texto = resto.substring(separador + 1).trim();
+        } else {
+            String[] partes = resto.split("\\s+", 2);
+            if (partes.length < 2) {
+                consola.append("Error: Formato incorrecto. Uso: Escribir <wr>: texto");
+                return;
+            }
+            nombreArchivo = partes[0];
+            texto = partes[1];
         }
         
-        String nombreArchivo = partes[0];
-        String texto = partes[1];
+        nombreArchivo = nombreArchivo.replace("<", "").replace(">", "").trim();
+        
+        if (nombreArchivo.isEmpty() || texto.isEmpty()) {
+            consola.append("Error: Debe especificar archivo y texto");
+            return;
+        }
         
         File archivo = new File(directorioActual, nombreArchivo);
         gestor2.escribirArchivo(archivo, texto);
@@ -256,7 +292,15 @@ public class GUI extends JFrame {
             consola.append("Error: Debe especificar el nombre del archivo");
             return;
         }
-}
+        
+        File archivo = new File(directorioActual, nombreArchivo);
+        String contenido = gestor2.leerArchivo(archivo);
+        
+        consola.append("\n----------- Contenido del archivo -----------");
+        consola.append("\n" + contenido);
+        consola.append("---------------------------------------------");
+    }
+    
     private void ejecutarExit() {
         consola.append("Cerrando la consola...");
         System.exit(0);
